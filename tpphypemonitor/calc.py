@@ -383,7 +383,7 @@ class HypeCalculator(object):
         )
 
         with self._thread_lock:
-            self._recent_hype_events.append(('begin', 'event_type', begin_time))
+            self._recent_hype_events.append(('begin', event_type, begin_time))
 
             while len(self._recent_hype_events) > 100:
                 del self._recent_hype_events[0]
@@ -397,4 +397,4 @@ class HypeCalculator(object):
         )
 
         with self._thread_lock:
-            self._recent_hype_events.append(('end', 'event_type', end_time))
+            self._recent_hype_events.append(('end', event_type, end_time))
