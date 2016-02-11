@@ -67,15 +67,20 @@ class StatsBot(IRCClient):
 
 if __name__ == '__main__':
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('server')
-    arg_parser.add_argument('nick')
-    arg_parser.add_argument('channel')
-    arg_parser.add_argument('stats_filename')
+    arg_parser.add_argument('config_filename')
 
     args = arg_parser.parse_args()
 
-    client = StatsBot(args.channel, args.stats_filename)
+    with open(args.config_filename) as file:
+        doc = json.load(file)
 
-    client.autoconnect(args.server, 6667, args.nick)
+    client = StatsBot(doc['channel'], doc['stats_filename'])
+
+    if doc.get('password'):
+        password = doc['password']
+    else:
+        password = None
+
+    client.autoconnect(doc['server'], 6667, doc['nickname'], password=password)
 
     client.reactor.process_forever()
