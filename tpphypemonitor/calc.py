@@ -160,6 +160,10 @@ class HypeCalculator(object):
         return self._last_timestamp
 
     @property
+    def run_start_timestamp(self):
+        return self._text_analyzer.run_start_timestamp
+
+    @property
     def duration(self):
         if not self._last_timestamp:
             return 0
@@ -172,13 +176,17 @@ class HypeCalculator(object):
             return tuple(self._recent_hype_events)
 
     def save_pickle(self):
-        with self._thread_lock, open(self._pickle_path, 'wb') as file:
+        new_path = self._pickle_path + '-new'
+        with self._thread_lock, open(new_path, 'wb') as file:
             pickle.dump(
                 {
                     'all_activity': self._activity,
                     'hype_events': self._hype_events,
+                    'recent_hype_events': self._recent_hype_events,
                 },
                 file)
+
+        os.rename(new_path, self._pickle_path)
 
     def add_chat_activity(self, nick, text, timestamp=None):
         self._input_queue.put(('chat', nick, text, timestamp))
