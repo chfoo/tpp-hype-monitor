@@ -110,6 +110,7 @@ def main():
             'utc_timestamp': time.time(),
             'stats': stats_doc(calculator),
             'recent_hype_events': calculator.recent_hype_events,
+            'run_start_timestamp': calculator.run_start_timestamp,
         }
 
         new_filename = args.stats_output_filename + '-new'
