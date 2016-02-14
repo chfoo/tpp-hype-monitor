@@ -1,0 +1,7 @@
+{
+  "server": "someserver.invalid",
+  "nickname": "statsbot",
+  "stats_filename": "path_to/stats.json",
+  "password": "hunter2",
+  "channel": "#test123123"
+}
